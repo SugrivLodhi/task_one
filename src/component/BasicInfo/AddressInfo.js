@@ -2,6 +2,10 @@ import EnergyType from './EnergyType'
 import { Button } from '@material-ui/core'
 import { useNavigate} from 'react-router-dom'
 import { Input } from '@material-ui/core'
+import Autocomplete from '@mui/material/Autocomplete';
+import { Box } from '@mui/material';
+import { TextField } from '@mui/material';
+
 const AddressInfo = ({address,input,setInput}) => {
     const histry = useNavigate();
     const ClickHandler = (e) =>{
@@ -13,8 +17,28 @@ const AddressInfo = ({address,input,setInput}) => {
     <div>
     <div>
       <h1>It contains Australian Address</h1>
-      <Input  placeholder='Enter the Address' id ='addr' value={input} onChange = {(e) =>setInput(e.target.value)}/>
-       {address.map((add) => {return <option>{add.adress}</option>})}   
+       <Autocomplete
+      id="addr"
+      sx={{ width: 300 }}
+      options={address}
+      autoHighlight
+      getOptionLabel={(option) => option.label}
+      renderOption={(props, option) => (
+        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+           {option.adress}
+        </Box>
+      )}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Choose a country"
+          inputProps={{
+            ...params.inputProps,
+            autoComplete: 'new-password', // disable autocomplete and autofill
+          }}
+        />
+      )}
+    />
     </div>
        <EnergyType/>
       <div>
